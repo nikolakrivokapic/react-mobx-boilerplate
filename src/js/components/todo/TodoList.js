@@ -4,10 +4,12 @@ import { observer } from "mobx-react"
 @observer
 export default class TodoList extends React.Component {
     createNew(e) {
-        if (e.which === 13) {
-            this.props.store.createTodo(e.target.value);
-            e.target.value = "";
+        if (e.which !== 13) {
+            return;
         }
+
+        this.props.store.createTodo(e.target.value);
+        e.target.value = "";
     }
 
     filter(e) {
@@ -15,26 +17,26 @@ export default class TodoList extends React.Component {
     }
 
     toggleComplete(todo) {
-        todo.complete = !todo.complete;
+        todo.selected = !todo.selected;
     }
 
     render() {
-        const { clearComplete, filter, filteredTodos } = this.props.store;
+        const { clearComplete, filter, filteredTodos, hasSelected } = this.props.store;
         const { todoBgColor } = this.props.appStore;
 
-        const todoLis = filteredTodos.map(todo => (
+        const todoList = filteredTodos.map(todo => (
             <li key={todo.id}>
-             <input type="checkbox" onChange={this.toggleComplete.bind(this, todo)} value={todo.complete} checked={todo.complete} />
-             <span>{todo.value}</span>
+                 <input type="checkbox" onChange={this.toggleComplete.bind(this, todo)} value={todo.selected} checked={todo.selected} />
+                 <span>{todo.value}</span>
             </li>
         ));
 
         return <div style={{background: todoBgColor}}>
             <h1>todos</h1>
-            <input className="new" onKeyPress={this.createNew.bind(this)} />
-            <input className="filter" value={filter} onChange={this.filter.bind(this)} />
-            <ul>{todoLis}</ul>
-            <a href="#" onClick={clearComplete}>Clear Complete</a>
+            <span>Add new: </span><input className="new" onKeyPress={this.createNew.bind(this)} />
+            <span>Filter: </span><input className="filter" value={filter} onChange={this.filter.bind(this)} />
+            <ul>{todoList}</ul>
+            {hasSelected && (<a href="#" onClick={clearComplete}>Clear Selected</a>)}
         </div>
     }
 }
