@@ -28,7 +28,7 @@ export class TodoStore {
         this.todos.push(new Todo(value))
     }
 
-    clearComplete = () => {
+    clearSelected = () => {
         const unselectedTodos = this.todos.filter(todo => !todo.selected);
         this.todos.replace(unselectedTodos);
     }
