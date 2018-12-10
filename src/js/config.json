@@ -1,0 +1,11 @@
+{
+    "id": "sample-project",
+    "title": "",
+    "description": "",
+    "capi": {
+        "bgColor": {
+          "alias": "Background Color",
+          "type": 2
+        }
+    }
+}
