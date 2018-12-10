@@ -21,7 +21,7 @@ export default class TodoList extends React.Component {
     }
 
     render() {
-        const { clearComplete, filter, filteredTodos, hasSelected } = this.props.store;
+        const { clearSelected, filter, filteredTodos, hasSelected } = this.props.store;
         const { todoBgColor } = this.props.appStore;
 
         const todoList = filteredTodos.map(todo => (
@@ -36,7 +36,7 @@ export default class TodoList extends React.Component {
             <span>Add new: </span><input className="new" onKeyPress={this.createNew.bind(this)} />
             <span>Filter: </span><input className="filter" value={filter} onChange={this.filter.bind(this)} />
             <ul>{todoList}</ul>
-            {hasSelected && (<a href="#" onClick={clearComplete}>Clear Selected</a>)}
+            {hasSelected && (<a href="#" onClick={clearSelected}>Clear Selected</a>)}
         </div>
     }
 }
